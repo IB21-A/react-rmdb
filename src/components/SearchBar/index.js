@@ -11,6 +11,22 @@ import { Wrapper, Content } from "./SearchBar.styles";
 
 const SearchBar = ({ setSearchTerm }) => {
 	const [state, setState] = useState(""); // Create a state and a setter. Set an initial value of nothing since a search bar will be blank
+    const initial = useRef(true); // this wont trigger a re-render, so it is directly mutable and doesnt need a setter
+
+		// Use effect will always trigger when the component first mounts, so we'll use useRef
+		// to ensure that when the componenet first mounts, it will not start sending searches until you begin to type
+		useEffect(() => {
+			if (initial.current) {
+				initial.current = false; // We are mutating this directly bc its not a state. useRef won't cause a rerender
+				return;
+			}
+			// this is a timer that will help create a delay between typing a search term and the auto search beginning
+			const timer = setTimeout(() => {
+				setSearchTerm(state);
+			}, 500);
+
+			return () => clearTimeout(timer);
+		}, [setSearchTerm, state]);
 
 	return (
 		<Wrapper>

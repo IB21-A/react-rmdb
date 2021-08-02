@@ -12,7 +12,7 @@ import NoImage from "../images/no_image.jpg";
 import SearchBar from "./SearchBar";
 
 const Home = () => {
-	const { state, loading, error } = useHomeFetch();
+	const { state, loading, error, setSearchTerm } = useHomeFetch();
 	console.log(state);
 
 	return (
@@ -25,7 +25,7 @@ const Home = () => {
 					text={state.results[0].overview}
 				/>
 			)}
-			<SearchBar />
+			<SearchBar setSearchTerm={setSearchTerm} />
 
 			<Grid header="Popular Movies">
 				{state.results.map((movie) => (
