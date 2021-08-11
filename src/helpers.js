@@ -13,3 +13,10 @@ export const convertMoney = money => {
   });
   return formatter.format(money);
 };
+
+export const isPersistedState = (stateName) => {
+	// will return the sessionStorage with given name if exists, else return null
+	const sessionState = sessionStorage.getItem(stateName);
+	// Will return null if negative, else will return what is beyond the &&, parsed
+	return sessionState && JSON.parse(sessionState);
+};

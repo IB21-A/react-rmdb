@@ -7,11 +7,15 @@ import { IMAGE_BASE_URL, POSTER_SIZE } from "../config";
 import BreadCrumb from "./Breadcrumb";
 import Grid from "./Grid";
 import Spinner from "./Spinner";
+import MovieInfo from "./MovieInfo";
+import Actor from "./Actor";
 
 // hook
 import { useMovieFetch } from "../hooks/useMovieFetch";
 //image
 import NoImage from "../images/no_image.jpg";
+import MovieInfoBar from "./MovieInfoBar";
+import { assertTSConstructSignatureDeclaration } from "@babel/types";
 
 const Movie = () => {
 	const { movieId } = useParams(); // useParams will get the movieId from the react-router-dom Route path='/:movieId'
@@ -28,6 +32,27 @@ const Movie = () => {
 	return (
 		<>
 			<BreadCrumb movieTitle={movie.original_title} />
+			<MovieInfo movie={movie} />
+			<MovieInfoBar
+				time={movie.runtime}
+				budget={movie.budget}
+				revenue={movie.revenue}
+			/>
+			<Grid header="Actors">
+				{movie.actors.map((actor) => (
+					<Actor
+						key={actor.credit_id}
+						name={actor.name}
+						character={actor.character}
+						imageUrl={
+							actor.profile_path
+								? `${IMAGE_BASE_URL}${POSTER_SIZE}${actor.profile_path}`
+								: NoImage
+						}
+					/>
+				))}
+			</Grid>
+
 			<div>{movie.title}</div>
 		</>
 	);

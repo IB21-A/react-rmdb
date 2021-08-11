@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 // input field controlled by react using the useState
 // Use useEffect to trigger when this local state changes & update search term
@@ -45,6 +46,10 @@ const SearchBar = ({ setSearchTerm }) => {
 			</Content>
 		</Wrapper>
 	);
+};
+
+SearchBar.propTypes = {
+	callback: PropTypes.func,
 };
 
 export default SearchBar;
